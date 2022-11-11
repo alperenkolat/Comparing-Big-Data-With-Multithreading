@@ -86,18 +86,20 @@ class user_interface(QWidget):
         f_box = QFormLayout()
         h_box = QHBoxLayout()
         h_box2 = QHBoxLayout()
+        h_box3 = QHBoxLayout()
 
 
 
         self.table = QtWidgets.QTableView()
 
+        self.filter_product = QCheckBox("Product")
+        self.filter_issue = QCheckBox("Issue")
+        self.filter_company = QCheckBox("Company")
+        self.filter_state = QCheckBox("State")
+        self.filter_zip_code = QCheckBox("ZIP Code")
+        self.filter_complaint_id = QCheckBox("Complaint ID")
 
-        self.product = QCheckBox("Product")
-        self.issue = QCheckBox("Issue")
-        self.company = QCheckBox("Company")
-        self.state = QCheckBox("State")
-        self.zip_code = QCheckBox("ZIP Code")
-        self.complaint_id = QCheckBox("Complaint ID")
+
 
         self.table.horizontalHeader().setStretchLastSection(True) 
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -107,6 +109,13 @@ class user_interface(QWidget):
         self.columns = QComboBox(self)
         for i in raw_data.columns:
             self.columns.addItem(i)
+
+        
+        self.same_columns = QComboBox(self)
+        self.same_columns.addItem("None")
+        for i in raw_data.columns:
+            self.same_columns.addItem(i)
+        
 
         
         self.model = TableModel(raw_data)
@@ -128,7 +137,21 @@ class user_interface(QWidget):
 
         self.search_button = QPushButton("Ara")
 
-        f_box.addWidget(self.table)
+        self.product = QCheckBox("Product")
+        self.issue = QCheckBox("Issue")
+        self.company = QCheckBox("Company")
+        self.state = QCheckBox("State")
+        self.zip_code = QCheckBox("ZIP Code")
+        self.complaint_id = QCheckBox("Complaint ID")
+
+
+        h_box3.addWidget(self.filter_product)
+        h_box3.addWidget(self.filter_issue)
+        h_box3.addWidget(self.filter_company)
+        h_box3.addWidget(self.filter_state)
+        h_box3.addWidget(self.filter_zip_code)
+        h_box3.addWidget(self.filter_complaint_id)
+        h_box3.addWidget(self.same_columns)
 
        
         h_box2.addWidget(self.product)
@@ -153,7 +176,8 @@ class user_interface(QWidget):
 
         self.search_button.clicked.connect(self.search) 
         h_box.addWidget(self.search_button)
-
+        f_box.addItem(h_box3)
+        f_box.addWidget(self.table)
         f_box.addItem(h_box2)
         f_box.addItem(h_box)
         self.setLayout(f_box)
